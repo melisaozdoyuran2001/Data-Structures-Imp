@@ -1,3 +1,5 @@
+const SinglyLinkedList = require('./SinglyLinkedList');
+
 class HashTable {
     constructor(size){
         this.data = new Array(size);
@@ -16,9 +18,11 @@ class HashTable {
     {
         let address = this._hash(key);
         if(!this.data[address]){
-            this.data[address] = [];
-        } 
-        this.data[address].push([key, value]); 
+            this.data[address] = new SinglyLinkedList([key, value]);
+        } else {
+            this.data[address].append([key, value]);
+        }
+       
         return this.data; 
     }
 
@@ -38,30 +42,26 @@ class HashTable {
     }
 
     keys(){
-        if (!this.data.length) {
-            return undefined;
-        }
-
-        const keys = []
-        for (let i = 0 ; i < this.data.length ; i++){
-            if (this.data[i] && this.data[i].length) {
-                if (this.data.length >1 ) {
-                    for (let j =0; j < this.data[i].length ; j++) {
-                        keys.push(this.data[i][j][0]);
-                    }
-                } else {
-                    keys.push(this.data[i][0]);
-                }
+        const keys = [];
+    
+        for (let i = 0; i < this.data.length; i++){
+            let currentNode = this.data[i] ? this.data[i].head : null;
+    
+            while (currentNode) {
+                keys.push(currentNode.value[0]);
+                currentNode = currentNode.next;
             }
         }
+        
         return keys; 
     }
+    
 } 
 
 const myHashTable = new HashTable(3);
 myHashTable.set('istanbul', 10); 
 myHashTable.set('newyork', 20)
 myHashTable.set('chicago', 30); 
-//console.log(myHashTable); 
+console.log(myHashTable); 
 //console.log(myHashTable.get('a'));
 console.log(myHashTable.keys()); 

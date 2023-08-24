@@ -93,3 +93,4 @@ myList.print();
 myList.delete(1); //delete
 
 
+module.exports = SinglyLinkedList;
