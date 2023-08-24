@@ -81,6 +81,25 @@ class DoublyLinkedList{
         }
         console.log(arr);
     }
+    
+    reverse() {
+        if (!this.head.next) {
+            return this.print(); 
+        }
+       let  first = this.head; 
+       this.tail = this.head; 
+       let second = first.next; 
+       while(second) {
+        const temp =second.next ;
+        second.next = first; 
+        first = second; 
+        second = temp; 
+       }
+       this.head.next = null; 
+       this.head =first; 
+       return this.print(); 
+    }
+   
 }
 
 
@@ -97,5 +116,6 @@ myList.insert(2, 1.5);
 myList.insert(100, 100);  //insert 
 myList.print(); 
 myList.delete(1); //delete
+myList.reverse(); 
 
 
